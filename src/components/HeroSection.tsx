@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import BackgroundEffects from './BackgroundEffects';
 import ParticleEffects from './ParticleEffects';
+import { scrollToSection } from '../lib/utils';
 
 const gamingCards = [
   {
@@ -161,8 +162,8 @@ export default function HeroSection() {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      <Link
-                        to="/#faq"
+                      <button
+                        onClick={() => scrollToSection('faq')}
                         className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
                           bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50
                           transition-all duration-200 text-sm text-purple-300 hover:text-purple-200"
@@ -171,7 +172,7 @@ export default function HeroSection() {
                         <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                      </Link>
+                      </button>
                     </motion.div>
                   </div>
                 </div>
@@ -219,7 +220,7 @@ export default function HeroSection() {
                 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&q=80&w=100'
               ].map((profileImg, i) => (
                 <motion.div
-                key={i}
+                  key={i}
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ duration: 0.3, delay: 1.4 + i * 0.1 }}
@@ -227,4 +228,19 @@ export default function HeroSection() {
                 >
                   <img 
                     src={profileImg} 
-                    alt={`
+                    alt={`Online gamer ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+            <div className="relative flex flex-col">
+              <span className="text-sm text-purple-400 font-medium group-hover:text-purple-300 transition-colors">1,200+ gamers</span>
+              <span className="text-xs text-gray-400 group-hover:text-gray-300 transition-colors">currently online</span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
