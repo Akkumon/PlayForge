@@ -1,6 +1,7 @@
 import React from 'react';
 import { Play } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import BackgroundEffects from './BackgroundEffects';
 import ParticleEffects from './ParticleEffects';
 
@@ -79,15 +80,18 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <motion.a 
-            href="/signup"
+          <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 w-full sm:w-auto text-center
-              shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50"
           >
-            Get Started
-          </motion.a>
+            <Link
+              to="/signup"
+              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 w-full sm:w-auto text-center
+                shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 block"
+            >
+              Get Started
+            </Link>
+          </motion.div>
           <motion.a 
             href="#features"
             whileHover={{ scale: 1.05 }}
