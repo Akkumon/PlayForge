@@ -140,6 +140,12 @@ export default function PricingSection() {
                   ? "bg-blue-500 text-white hover:bg-blue-600"
                   : "bg-[#1E2537] text-white hover:bg-[#2A3447]"
               )}
+              onClick={() => {
+                document.getElementById('hero')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
             >
               {plan.isPopular ? 'Start 7-day free trial' : 'Choose plan'}
             </button>
