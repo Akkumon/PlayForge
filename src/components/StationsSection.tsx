@@ -1,72 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, MapPin, Calendar, X, ChevronLeft, ChevronRight as ChevronRightIcon, Clock, Check } from 'lucide-react';
+import { ChevronRight, MapPin, Calendar, X, ChevronLeft, ChevronRight as ChevronRightIcon, Clock, Check, MemoryStick, Gamepad2, Star } from 'lucide-react';
+import OptimizedImage from './common/OptimizedImage';
+import { StationCardSkeleton } from './ui/Skeleton';
+
+const BookingModal = React.lazy(() => import('./BookingModal'));
 
 interface Station {
-  id: string;
+  id: number;
   name: string;
-  location: string;
-  rating: number;
-  reviews: number;
-  status: 'Available' | 'Under Maintenance';
   image: string;
   specs: {
-    cpu: string;
-    gpu: string;
     ram: string;
+    gpu: string;
     storage: string;
   };
-  features: string[];
+  rating: number;
+  status: 'available' | 'occupied';
 }
 
 const stations: Station[] = [
   {
-    id: '1',
-    name: 'Nebula X1',
-    location: 'New York',
+    id: 1,
+    name: 'Pro Gaming Station Alpha',
+    image: 'https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?q=80&w=2071',
+    specs: {
+      ram: '32GB DDR5',
+      gpu: 'RTX 4090',
+      storage: '2TB NVMe',
+    },
     rating: 4.9,
-    reviews: 124,
-    status: 'Available',
-    image: 'https://images.unsplash.com/photo-1593640495253-23196b27a87f?auto=format&fit=crop&q=80&w=2942',
-    specs: {
-      cpu: 'AMD Ryzen 9 5900X',
-      gpu: 'NVIDIA RTX 3080',
-      ram: '32GB DDR4',
-      storage: '2TB NVMe SSD',
-    },
-    features: ['4K Gaming', 'Ray Tracing', 'Premium Audio'],
+    status: 'available',
   },
   {
-    id: '2',
-    name: 'Quantum Pro',
-    location: 'Los Angeles',
-    rating: 5.0,
-    reviews: 89,
-    status: 'Available',
-    image: 'https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?auto=format&fit=crop&q=80&w=2940',
+    id: 2,
+    name: 'Elite Gaming Station Beta',
+    image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=2042',
     specs: {
-      cpu: 'Intel i9-12900K',
-      gpu: 'NVIDIA RTX 3090',
       ram: '64GB DDR5',
-      storage: '4TB NVMe SSD',
+      gpu: 'RTX 4080',
+      storage: '4TB NVMe',
     },
-    features: ['8K Gaming', 'Ray Tracing', 'Premium Audio'],
+    rating: 4.7,
+    status: 'occupied',
   },
   {
-    id: '3',
-    name: 'Fusion Elite',
-    location: 'Chicago',
-    rating: 4.8,
-    reviews: 56,
-    status: 'Under Maintenance',
-    image: 'https://images.unsplash.com/photo-1600861194942-f883de0dfe96?auto=format&fit=crop&q=80&w=2949',
+    id: 3,
+    name: 'Ultra Gaming Station Gamma',
+    image: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?q=80&w=2070',
     specs: {
-      cpu: 'AMD Threadripper',
-      gpu: 'NVIDIA RTX 3080 Ti',
       ram: '128GB DDR5',
-      storage: '8TB NVMe SSD',
+      gpu: 'RTX 4090 Ti',
+      storage: '8TB NVMe',
     },
-    features: ['4K Gaming', 'Ray Tracing', 'Premium Audio'],
+    rating: 5.0,
+    status: 'available',
   },
 ];
 
@@ -106,6 +94,7 @@ interface BookingModalProps {
   isOpen: boolean;
   onClose: () => void;
   stationName: string;
+  onBookingConfirmed: () => void;
 }
 
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -124,312 +113,199 @@ const timeSlots = [
   '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
 ];
 
-function BookingModal({ isOpen, onClose, stationName }: BookingModalProps) {
-  const [step, setStep] = useState<'date' | 'time' | 'confirmation'>('date');
-  const [selectedDate, setSelectedDate] = useState<number | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  const handleDateSelect = (date: number) => {
-    setSelectedDate(date);
-    setStep('time');
-  };
-
-  const handleTimeSelect = (time: string) => {
-    setSelectedTime(time);
-    setStep('confirmation');
-  };
-
-  const handleConfirm = () => {
-    setShowSuccess(true);
-    onClose();
-    setStep('date');
-    setSelectedDate(null);
-    setSelectedTime(null);
-  };
-
-  return (
-    <>
-      <AnimatePresence>
-        {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50"
-              onClick={onClose}
-            />
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ type: "spring", duration: 0.5 }}
-                className="w-full max-w-xl bg-[#0f1729] rounded-2xl shadow-2xl overflow-hidden
-                  shadow-[0_0_50px_rgba(147,51,234,0.3)] border border-purple-500/20 mx-4"
-                style={{
-                  background: 'linear-gradient(180deg, rgba(15,23,41,1) 0%, rgba(17,24,39,1) 100%)',
-                }}
-              >
-                <div className="p-8">
-                  <div className="text-center mb-8">
-                    <h2 className="text-2xl font-bold text-white mb-2">Book Your Gaming Session</h2>
-                    <p className="text-gray-400">{stationName}</p>
-                  </div>
-
-                  <AnimatePresence mode="wait">
-                    {step === 'date' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="space-y-6"
-                      >
-                        <div className="flex items-center gap-2 text-purple-400 justify-center">
-                          <Calendar className="w-5 h-5" />
-                          <span className="font-medium">Select Date & Time</span>
-                        </div>
-
-                        <div className="flex items-center justify-center gap-1">
-                          {dates.map((item, index) => (
-                            <motion.div
-                              key={index}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              onClick={() => handleDateSelect(item.date)}
-                              className={`flex flex-col items-center p-3 rounded-lg cursor-pointer transition-all duration-200 ${
-                                item.isSelected
-                                  ? 'bg-purple-600 text-white'
-                                  : 'hover:bg-white/5 text-gray-400'
-                              }`}
-                            >
-                              <span className="text-sm font-medium">{item.day}</span>
-                              <span className={`text-lg font-medium ${item.isSelected ? 'text-white' : ''}`}>
-                                {item.date}
-                              </span>
-                            </motion.div>
-                          ))}
-                        </div>
-
-                        <div className="text-center text-gray-400 text-sm">
-                          Please select a date to view available time slots
-                        </div>
-                      </motion.div>
-                    )}
-
-                    {step === 'time' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="space-y-6"
-                      >
-                        <div className="flex items-center gap-2 text-purple-400 justify-center">
-                          <Clock className="w-5 h-5" />
-                          <span className="font-medium">Select Time Slot</span>
-                        </div>
-
-                        <div className="grid grid-cols-4 gap-3">
-                          {timeSlots.map((time, index) => (
-                            <motion.button
-                              key={index}
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              onClick={() => handleTimeSelect(time)}
-                              className="px-4 py-2 rounded-lg bg-white/5 hover:bg-purple-600 text-gray-400 hover:text-white transition-all duration-200"
-                            >
-                              {time}
-                            </motion.button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-
-                    {step === 'confirmation' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="space-y-6 text-center"
-                      >
-                        <div className="space-y-2">
-                          <p className="text-gray-400">You're about to book</p>
-                          <p className="text-xl font-bold text-white">{stationName}</p>
-                          <p className="text-purple-400">
-                            {selectedDate} {days[new Date().getDay()]} at {selectedTime}
-                          </p>
-                        </div>
-
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={handleConfirm}
-                          className="w-full px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors duration-200"
-                        >
-                          Confirm Booking
-                        </motion.button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  {step !== 'date' && (
-                    <button
-                      onClick={() => setStep(step === 'confirmation' ? 'time' : 'date')}
-                      className="mt-4 text-gray-400 hover:text-white transition-colors duration-200 text-sm"
-                    >
-                      ← Go Back
-                    </button>
-                  )}
-                </div>
-              </motion.div>
-            </div>
-          </>
-        )}
-      </AnimatePresence>
-      <SuccessNotification 
-        isVisible={showSuccess} 
-        onClose={() => setShowSuccess(false)} 
-      />
-    </>
-  );
-}
-
 export default function StationsSection() {
-  const [selectedStation, setSelectedStation] = useState<string | null>(null);
+  const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Simulate loading state
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleStationClick = (station: Station) => {
+    if (station.status === 'available') {
+      setSelectedStation(station);
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleBookingConfirmed = () => {
+    setShowSuccess(true);
+    setIsModalOpen(false);
+  };
 
   return (
-    <section id="stations" className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section id="stations" className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/20 to-black pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-purple-400 font-medium mb-4">Gaming Stations</h2>
-          <h3 className="text-4xl sm:text-5xl font-bold text-white mb-6 font-press-start-2p text-3xl sm:text-4xl md:text-4xl leading-relaxed">
+        <div className="text-center mb-8 sm:mb-16">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-purple-400 font-medium mb-4"
+          >
+            Gaming Stations
+          </motion.h2>
+          <motion.h3 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 font-press-start-2p leading-relaxed"
+          >
             Premium Hardware At Your Fingertips
-          </h3>
-          <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+          </motion.h3>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-gray-400 text-base sm:text-lg max-w-3xl mx-auto"
+          >
             Choose from our selection of high-performance gaming stations, each equipped with top-tier
             components for the ultimate gaming experience.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {stations.map((station) => (
-            <motion.div
-              key={station.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300"
-            >
-              <div className="relative">
-                <div className="absolute top-4 right-4 z-10">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    station.status === 'Available' 
-                      ? 'bg-green-500/20 text-green-400' 
-                      : 'bg-orange-500/20 text-orange-400'
-                  }`}>
-                    {station.status}
-                  </span>
-                </div>
-                <div className="h-48">
-                  <img
-                    src={station.image}
-                    alt={station.name}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f1729] to-transparent" />
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
-                    {station.name}
-                  </h3>
-                  <div className="flex items-center gap-1">
-                    <span className="text-yellow-400">★</span>
-                    <span className="text-white">{station.rating}</span>
-                    <span className="text-gray-400">({station.reviews})</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-gray-400 mb-4">
-                  <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{station.location}</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="space-y-2">
-                    <div className="text-gray-400 text-sm">CPU</div>
-                    <div className="text-white text-sm font-medium">{station.specs.cpu}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-gray-400 text-sm">GPU</div>
-                    <div className="text-white text-sm font-medium">{station.specs.gpu}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-gray-400 text-sm">RAM</div>
-                    <div className="text-white text-sm font-medium">{station.specs.ram}</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-gray-400 text-sm">Storage</div>
-                    <div className="text-white text-sm font-medium">{station.specs.storage}</div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {station.features.map((feature, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-white/5 rounded-lg text-gray-300 text-xs"
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
+          {isLoading ? (
+            <>
+              <StationCardSkeleton />
+              <StationCardSkeleton />
+              <StationCardSkeleton />
+            </>
+          ) : (
+            stations.map((station) => (
+              <motion.div
+                key={station.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300
+                  hover:shadow-[0_0_30px_rgba(147,51,234,0.1)] focus-within:ring-2 focus-within:ring-purple-500"
+                role="article"
+                aria-label={`Gaming station: ${station.name}`}
+              >
+                <div className="relative">
+                  <div className="absolute top-4 right-4 z-10">
+                    <span 
+                      className={`px-3 py-1 rounded-full text-sm font-medium ${
+                        station.status === 'available' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'bg-red-500/20 text-red-400'
+                      }`}
+                      role="status"
+                      aria-label={`Station status: ${station.status}`}
                     >
-                      {feature}
+                      {station.status}
                     </span>
-                  ))}
-                  <span className="px-2 py-1 bg-white/5 rounded-lg text-gray-300 text-xs">
-                    +{station.features.length - 3} more
-                  </span>
+                  </div>
+                  <div className="h-48 sm:h-56">
+                    <OptimizedImage
+                      src={station.image}
+                      alt={station.name}
+                      width={600}
+                      className="w-full h-full transform group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
                 </div>
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
+                      {station.name}
+                    </h3>
+                    <div className="flex items-center gap-1" role="img" aria-label={`Rating: ${station.rating} out of 5`}>
+                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                      <span className="text-white">{station.rating}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <MemoryStick className="w-4 h-4 text-purple-400" />
+                      <span className="text-sm">{station.specs.ram}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <Gamepad2 className="w-4 h-4 text-purple-400" />
+                      <span className="text-sm">{station.specs.gpu}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-400">
+                      <span className="text-sm">{station.specs.storage}</span>
+                    </div>
+                  </div>
 
-                <div className="flex gap-3">
-                  <button 
-                    onClick={() => {
-                      document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors duration-200"
-                  >
-                    View Details
-                  </button>
-                  <button 
-                    onClick={() => station.status === 'Available' && setSelectedStation(station.name)}
-                    className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                      station.status === 'Available'
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white'
-                        : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                    }`}
-                    disabled={station.status !== 'Available'}
-                  >
-                    Book Now
-                  </button>
+                  <div className="flex gap-3">
+                    <button 
+                      onClick={() => {
+                        document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors duration-200
+                        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0f1729]"
+                      aria-label={`View details for ${station.name}`}
+                    >
+                      View Details
+                    </button>
+                    <button 
+                      onClick={() => handleStationClick(station)}
+                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
+                        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0f1729]
+                        ${
+                          station.status === 'available'
+                            ? 'bg-purple-600 hover:bg-purple-700 text-white'
+                            : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                        }`}
+                      disabled={station.status !== 'available'}
+                      aria-label={station.status === 'available' ? `Book ${station.name}` : `${station.name} is currently occupied`}
+                    >
+                      {station.status === 'available' ? 'Book Now' : 'Occupied'}
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))
+          )}
         </div>
 
-        <div className="text-center">
-          <button className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200">
+        <motion.div 
+          className="text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <button 
+            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200
+              focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-4 py-2"
+            aria-label="View all gaming stations"
+          >
             View All Stations
             <ChevronRight className="w-4 h-4" />
           </button>
-        </div>
+        </motion.div>
       </div>
 
-      <BookingModal
-        isOpen={!!selectedStation}
-        onClose={() => setSelectedStation(null)}
-        stationName={selectedStation || ''}
+      <Suspense fallback={
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="text-white animate-pulse">Loading...</div>
+        </div>
+      }>
+        {selectedStation && (
+          <BookingModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            stationName={selectedStation.name}
+            onBookingConfirmed={handleBookingConfirmed}
+          />
+        )}
+      </Suspense>
+      <SuccessNotification 
+        isVisible={showSuccess} 
+        onClose={() => setShowSuccess(false)} 
       />
     </section>
   );

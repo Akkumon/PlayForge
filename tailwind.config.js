@@ -1,6 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
@@ -8,11 +12,23 @@ export default {
         'sans': ['Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
+        'gradient': 'gradient 8s linear infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'text-shimmer': 'text-shimmer 3s ease-in-out infinite',
         'fade-in': 'fade-in 1s ease-out',
         'slide-up': 'slide-up 0.8s ease-out',
       },
       keyframes: {
+        gradient: {
+          '0%, 100%': {
+            'background-size': '200% 200%',
+            'background-position': 'left center'
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center'
+          },
+        },
         'text-shimmer': {
           '0%, 100%': {
             'background-size': '200% 200%',

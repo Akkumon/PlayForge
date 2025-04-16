@@ -83,7 +83,8 @@ export default function HeroSection() {
             href="/signup"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg font-medium transition-colors duration-200 w-full sm:w-auto text-center"
+            className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 w-full sm:w-auto text-center
+              shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50"
           >
             Get Started
           </motion.a>
@@ -91,9 +92,11 @@ export default function HeroSection() {
             href="#features"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group bg-white/10 hover:bg-white/20 px-8 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 w-full sm:w-auto"
+            className="group bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200 
+              flex items-center justify-center gap-2 w-full sm:w-auto backdrop-blur-sm border border-white/10 hover:border-white/20
+              shadow-lg shadow-white/5 hover:shadow-white/10"
           >
-            <Play className="h-4 w-4" fill="currentColor" />
+            <Play className="h-4 w-4 text-purple-400 group-hover:text-purple-300" fill="currentColor" />
             Learn More
           </motion.a>
         </motion.div>
@@ -119,8 +122,9 @@ export default function HeroSection() {
               }}
               className="group relative w-64 md:w-72 hover:z-10 transition-all duration-300"
             >
-              <div className={`bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300 ${card.shadow} hover:translate-y-[-5px]`}>
-                <div className={`absolute inset-0 bg-gradient-to-r ${card.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+              <div className={`bg-black/60 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 
+                transition-all duration-300 ${card.shadow} hover:translate-y-[-5px] hover:bg-black/70`}>
+                <div className={`absolute inset-0 bg-gradient-to-r ${card.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-300`} />
                 <div className="relative flex flex-col">
                   <div className="aspect-video overflow-hidden">
                     <img
@@ -131,27 +135,31 @@ export default function HeroSection() {
                   </div>
                   <div className="p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="px-2 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400">
+                      <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/30 text-purple-300 border border-purple-500/30">
                         {card.category}
                       </span>
                       <motion.div 
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.3, delay: 1.2 + index * 0.1 }}
-                        className="h-6 w-6 rounded-full bg-purple-500/20 border border-purple-500/30 flex items-center justify-center"
+                        className="h-6 w-6 rounded-full bg-purple-500/30 border border-purple-500/40 flex items-center justify-center"
                       >
-                        <span className="text-xs font-bold text-purple-400">{index + 1}</span>
+                        <span className="text-xs font-bold text-purple-300">{index + 1}</span>
                       </motion.div>
                     </div>
-                    <h3 className="text-lg font-bold text-white line-clamp-1">{card.title}</h3>
-                    <p className="text-xs text-gray-400 line-clamp-2">
+                    <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors duration-300 line-clamp-1">
+                      {card.title}
+                    </h3>
+                    <p className="text-xs text-gray-300 line-clamp-2 group-hover:text-gray-200 transition-colors duration-300">
                       Experience the ultimate gaming setup with our cloud-based platform.
                     </p>
                     <motion.a
                       href="/"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="w-full inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors duration-200 text-sm"
+                      className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
+                        bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50
+                        transition-all duration-200 text-sm text-purple-300 hover:text-purple-200"
                     >
                       <span className="font-medium">Learn More</span>
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
