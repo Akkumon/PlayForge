@@ -8,7 +8,7 @@ import { scrollToSection } from '../lib/utils';
 import Logo from './Logo';
 
 const navItems = [
-  { name: 'Home', href: '/' },
+  { name: 'Home', href: '/#hero', isScroll: true },
   { name: 'Features', href: '/#features', isScroll: true },
   { name: 'Stations', href: '/#stations', isScroll: true },
   { name: 'Pricing', href: '/#pricing', isScroll: true },
@@ -26,9 +26,11 @@ export default function Navbar() {
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
+        setMobileMenuOpen(false);
       }
+    } else if (!isScroll) {
+      setMobileMenuOpen(false);
     }
-    setMobileMenuOpen(false);
   };
 
   return (
@@ -37,7 +39,14 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center">
+              <Link 
+                to="/#hero"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick('/#hero', true);
+                }}
+                className="flex items-center"
+              >
                 <Logo />
               </Link>
             </div>
