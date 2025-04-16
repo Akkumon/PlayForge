@@ -8,8 +8,7 @@ export default function SignupPage() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate('/#hero');
-    window.scrollTo(0, 0);
+    navigate('/');
   };
 
   return (
