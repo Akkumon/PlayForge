@@ -172,7 +172,7 @@ export default function StationsSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {isLoading ? (
             <>
               <StationCardSkeleton />
@@ -271,22 +271,6 @@ export default function StationsSection() {
             ))
           )}
         </div>
-
-        <motion.div 
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <button 
-            className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 font-medium transition-colors duration-200
-              focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-4 py-2"
-            aria-label="View all gaming stations"
-          >
-            View All Stations
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </motion.div>
       </div>
 
       <Suspense fallback={

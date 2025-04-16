@@ -77,7 +77,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ text, name, company, 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
       className="testimonial-card relative overflow-hidden rounded-2xl bg-black/60 backdrop-blur-sm border border-white/5 hover:border-purple-500/30 transition-all duration-300 group"
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 transition-opacity duration-300 group-hover:opacity-30`} />
@@ -112,7 +112,7 @@ export const TestimonialsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {testimonials.map((testimonial, index) => (

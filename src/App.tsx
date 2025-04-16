@@ -1,20 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import FeaturesSection from './components/FeaturesSection';
-import StationsSection from './components/StationsSection';
-import GameLibrary from './components/GameLibrary';
-import HowItWorksSection from './components/HowItWorksSection';
-import PricingSection from './components/PricingSection';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { CTASection } from './components/CTASection';
-import { FAQSection } from './components/FAQSection';
-import Footer from './components/Footer';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ThemeProvider } from './components/ThemeProvider';
 import { ThemeToggle } from './components/ui/ThemeToggle';
+import ChatSupport from './components/ChatSupport';
 
 // Lazy load page components
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -41,6 +30,7 @@ function App() {
               <Route path="/stations" element={<StationsPage />} />
             </Routes>
           </Suspense>
+          <ChatSupport />
         </Router>
       </ThemeProvider>
     </ErrorBoundary>

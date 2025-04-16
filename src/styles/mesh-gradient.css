@@ -32,13 +32,13 @@
 }
 
 .testimonial-card:nth-child(3n+1) {
-  animation: cardFloat 8s ease infinite;
+  animation: cardFloat 4s ease infinite;
 }
 
 .testimonial-card:nth-child(3n+2) {
-  animation: cardFloat 8s ease infinite 1s;
+  animation: cardFloat 4s ease infinite 0.5s;
 }
 
 .testimonial-card:nth-child(3n+3) {
-  animation: cardFloat 8s ease infinite 2s;
+  animation: cardFloat 4s ease infinite 1s;
 } 
