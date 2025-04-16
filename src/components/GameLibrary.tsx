@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, Play } from 'lucide-react';
 
 interface Game {
   id: string;
@@ -143,9 +143,15 @@ export default function GameLibrary() {
                   <span className="text-purple-400 group-hover:text-purple-300 transition-colors duration-300">{game.genre}</span>
                   <span className="text-yellow-400 group-hover:text-yellow-300 transition-colors duration-300">★ {game.rating}</span>
                 </div>
-                <button className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-all duration-300 transform group-hover:translate-y-[-2px] group-hover:shadow-lg group-hover:shadow-purple-500/20">
+                <motion.a
+                  href="#hero"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-medium transition-colors duration-200"
+                >
+                  <Play className="w-4 h-4" />
                   Play Now
-                </button>
+                </motion.a>
               </div>
             </motion.div>
           ))}
