@@ -19,6 +19,7 @@ import { ThemeToggle } from './components/ui/ThemeToggle';
 // Lazy load page components
 const HomePage = lazy(() => import('./pages/HomePage'));
 const SignupPage = lazy(() => import('./pages/SignupPage'));
+const StationsPage = lazy(() => import('./pages/StationsPage'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -37,6 +38,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<SignupPage />} />
+              <Route path="/stations" element={<StationsPage />} />
             </Routes>
           </Suspense>
         </Router>

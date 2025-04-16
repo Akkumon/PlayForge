@@ -154,7 +154,7 @@ export default function HeroSection() {
                       Experience the ultimate gaming setup with our cloud-based platform.
                     </p>
                     <motion.a
-                      href="/"
+                      href="/stations"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
@@ -173,6 +173,26 @@ export default function HeroSection() {
           ))}
         </div>
         
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 1.2 }}
+          className="mt-12 flex justify-center"
+        >
+          <motion.a
+            href="/stations"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="group bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200
+              shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 flex items-center gap-2"
+          >
+            <span>View All Stations</span>
+            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.a>
+        </motion.div>
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

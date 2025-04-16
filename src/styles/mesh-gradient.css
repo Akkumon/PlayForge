@@ -1,0 +1,44 @@
+@keyframes meshGradientMove {
+  0% {
+    background-position: 0% 50%;
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 0.5;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 0.7;
+  }
+  75% {
+    opacity: 0.5;
+  }
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes cardFloat {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.testimonial-card:nth-child(3n+1) {
+  animation: cardFloat 8s ease infinite;
+}
+
+.testimonial-card:nth-child(3n+2) {
+  animation: cardFloat 8s ease infinite 1s;
+}
+
+.testimonial-card:nth-child(3n+3) {
+  animation: cardFloat 8s ease infinite 2s;
+} 
