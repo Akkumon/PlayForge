@@ -183,18 +183,21 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 1.2 }}
           className="mt-12 flex justify-center"
         >
-          <motion.a
-            href="/stations"
+          <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200
-              shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 flex items-center gap-2"
           >
-            <span>View All Stations</span>
-            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </motion.a>
+            <Link
+              to="/stations"
+              className="group bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-all duration-200
+                shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 flex items-center gap-2"
+            >
+              <span>View All Stations</span>
+              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </motion.div>
         </motion.div>
 
         <motion.div 
