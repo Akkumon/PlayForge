@@ -127,3 +127,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Framer Motion](https://www.framer.com/motion/)
 - [Lucide Icons](https://lucide.dev/)
 - [Vite](https://vitejs.dev/) 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Akkumon/playforge-web?utm_source=oss&utm_medium=github&utm_campaign=Akkumon%2Fplayforge-web&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
