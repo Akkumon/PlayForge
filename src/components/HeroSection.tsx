@@ -37,6 +37,107 @@ const gamingCards = [
   }
 ];
 
+const Card = ({ card, index }: { card: typeof gamingCards[0], index: number }) => {
+  return (
+    <motion.div
+      key={index}
+      initial={{ opacity: 0, x: -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ 
+        duration: 0.5, 
+        delay: 0.8 + index * 0.1,
+        type: "spring",
+        stiffness: 100
+      }}
+      className="group relative w-64 md:w-72 hover:z-10 transition-all duration-300 perspective-1000"
+      whileHover={{
+        rotateX: 0,
+        rotateY: 0,
+        scale: 1.05,
+        transition: {
+          duration: 0.2,
+          ease: "easeOut"
+        }
+      }}
+      style={{
+        transformStyle: "preserve-3d",
+      }}
+    >
+      <motion.div
+        className={`bg-black/60 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 
+          transition-all duration-300 ${card.shadow} hover:translate-y-[-5px] hover:bg-black/70`}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <motion.div
+          className={`absolute inset-0 bg-gradient-to-r ${card.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-300`}
+          style={{
+            transform: "translateZ(20px)",
+          }}
+        />
+        <motion.div className="relative flex flex-col" style={{ transform: "translateZ(50px)" }}>
+          <div className="aspect-video overflow-hidden">
+            <motion.img
+              src={card.src}
+              alt={card.title}
+              className="w-full h-full object-cover"
+              style={{
+                transform: "translateZ(75px)",
+              }}
+            />
+          </div>
+          <div className="p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <motion.span 
+                className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/30 text-purple-300 border border-purple-500/30"
+                style={{ transform: "translateZ(50px)" }}
+              >
+                {card.category}
+              </motion.span>
+              <motion.div 
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3, delay: 1.2 + index * 0.1 }}
+                className="h-6 w-6 rounded-full bg-purple-500/30 border border-purple-500/40 flex items-center justify-center"
+                style={{ transform: "translateZ(50px)" }}
+              >
+                <span className="text-xs font-bold text-purple-300">{index + 1}</span>
+              </motion.div>
+            </div>
+            <motion.h3 
+              className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors duration-300 line-clamp-1"
+              style={{ transform: "translateZ(75px)" }}
+            >
+              {card.title}
+            </motion.h3>
+            <motion.p 
+              className="text-xs text-gray-300 line-clamp-2 group-hover:text-gray-200 transition-colors duration-300"
+              style={{ transform: "translateZ(50px)" }}
+            >
+              Experience the ultimate gaming setup with our cloud-based platform.
+            </motion.p>
+            <motion.button
+              onClick={() => scrollToSection('faq')}
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
+                bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50
+                transition-all duration-200 text-sm text-purple-300 hover:text-purple-200"
+              style={{ transform: "translateZ(75px)" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span className="font-medium">Learn More</span>
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </motion.button>
+          </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export default function HeroSection() {
   return (
     <div id="hero" className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-32 font-sans">
@@ -111,73 +212,11 @@ export default function HeroSection() {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
-        className="relative z-10 mt-16 w-full max-w-6xl mx-auto"
+        className="relative z-10 mt-16 w-full max-w-6xl mx-auto perspective-1000"
       >
         <div className="flex flex-row justify-center -space-x-4 md:-space-x-8">
           {gamingCards.map((card, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ 
-                duration: 0.5, 
-                delay: 0.8 + index * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
-              className="group relative w-64 md:w-72 hover:z-10 transition-all duration-300"
-            >
-              <div className={`bg-black/60 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 
-                transition-all duration-300 ${card.shadow} hover:translate-y-[-5px] hover:bg-black/70`}>
-                <div className={`absolute inset-0 bg-gradient-to-r ${card.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-300`} />
-                <div className="relative flex flex-col">
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={card.src}
-                      alt={card.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/30 text-purple-300 border border-purple-500/30">
-                        {card.category}
-                      </span>
-                      <motion.div 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.3, delay: 1.2 + index * 0.1 }}
-                        className="h-6 w-6 rounded-full bg-purple-500/30 border border-purple-500/40 flex items-center justify-center"
-                      >
-                        <span className="text-xs font-bold text-purple-300">{index + 1}</span>
-                      </motion.div>
-                    </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors duration-300 line-clamp-1">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs text-gray-300 line-clamp-2 group-hover:text-gray-200 transition-colors duration-300">
-                      Experience the ultimate gaming setup with our cloud-based platform.
-                    </p>
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <button
-                        onClick={() => scrollToSection('faq')}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
-                          bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50
-                          transition-all duration-200 text-sm text-purple-300 hover:text-purple-200"
-                      >
-                        <span className="font-medium">Learn More</span>
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+            <Card key={index} card={card} index={index} />
           ))}
         </div>
         
