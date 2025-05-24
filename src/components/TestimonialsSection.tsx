@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import '../styles/mesh-gradient.css';
+import { useTiltEffect } from '../hooks/useTiltEffect';
 
 interface TestimonialCardProps {
   text: string;
@@ -63,6 +64,12 @@ const testimonials = [
 ];
 
 const TestimonialCard: React.FC<TestimonialCardProps> = ({ text, name, company, imageUrl, gradient, meshColors }) => {
+  const { tiltStyle, onMouseMove, onMouseLeave } = useTiltEffect({
+    max: 12,
+    scale: 1.02,
+    speed: 400,
+  });
+
   const meshGradientStyle = {
     background: `
       radial-gradient(at 21% 33%, ${meshColors[0]}1A 0px, transparent 50%),
@@ -79,6 +86,9 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ text, name, company, 
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
       className="testimonial-card relative overflow-hidden rounded-2xl bg-black/60 backdrop-blur-sm border border-white/5 hover:border-purple-500/30 transition-all duration-300 group"
+      style={tiltStyle}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 transition-opacity duration-300 group-hover:opacity-30`} />
       <div 
@@ -122,4 +132,4 @@ export const TestimonialsSection = () => {
       </div>
     </section>
   );
-}; 
+};
