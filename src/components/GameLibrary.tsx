@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, Play } from 'lucide-react';
+import { useTiltEffect } from '../hooks/useTiltEffect';
 
 interface Game {
   id: string;
@@ -117,46 +118,57 @@ export default function GameLibrary() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredGames.map((game) => (
-            <motion.div
-              key={game.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ 
-                scale: 1.02,
-                transition: { duration: 0.2 }
-              }}
-              transition={{ duration: 0.3 }}
-              className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={game.image}
-                  alt={game.title}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1729] to-transparent" />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">{game.title}</h3>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-purple-400 group-hover:text-purple-300 transition-colors duration-300">{game.genre}</span>
-                  <span className="text-yellow-400 group-hover:text-yellow-300 transition-colors duration-300">★ {game.rating}</span>
+          {filteredGames.map((game) => {
+            const { tiltStyle, onMouseMove, onMouseLeave } = useTiltEffect({
+              max: 8,
+              scale: 1.02,
+              speed: 400,
+            });
+
+            return (
+              <motion.div
+                key={game.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ 
+                  scale: 1.02,
+                  transition: { duration: 0.2 }
+                }}
+                transition={{ duration: 0.3 }}
+                className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
+                style={tiltStyle}
+                onMouseMove={onMouseMove}
+                onMouseLeave={onMouseLeave}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={game.image}
+                    alt={game.title}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f1729] to-transparent" />
                 </div>
-                <motion.a
-                  href="#hero"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-medium transition-colors duration-200"
-                >
-                  <Play className="w-4 h-4" />
-                  Play Now
-                </motion.a>
-              </div>
-            </motion.div>
-          ))}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">{game.title}</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-purple-400 group-hover:text-purple-300 transition-colors duration-300">{game.genre}</span>
+                    <span className="text-yellow-400 group-hover:text-yellow-300 transition-colors duration-300">★ {game.rating}</span>
+                  </div>
+                  <motion.a
+                    href="#hero"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-medium transition-colors duration-200"
+                  >
+                    <Play className="w-4 h-4" />
+                    Play Now
+                  </motion.a>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
-} 
+}
