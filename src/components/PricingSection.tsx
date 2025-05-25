@@ -53,22 +53,22 @@ export default function PricingSection() {
   const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
 
   return (
-    <div id="pricing" className="py-24 sm:py-32 container mx-auto px-4">
-      <div className="text-center mb-16">
-        <h2 className="text-4xl font-bold text-white mb-4 font-press-start-2p text-3xl sm:text-4xl leading-relaxed">
+    <div id="pricing" className="py-16 sm:py-20 lg:py-24 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-12 sm:mb-16">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-press-start-2p leading-tight">
           Pricing Plans
         </h2>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+        <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto">
           Choose the perfect plan for your gaming needs
         </p>
       </div>
 
       {/* Billing Toggle */}
-      <div className="flex justify-center items-center gap-4 mb-12">
+      <div className="flex justify-center items-center gap-4 sm:gap-6 mb-10 sm:mb-12">
         <button
           onClick={() => setBillingPeriod('monthly')}
           className={cn(
-            "px-4 py-2 rounded-lg font-medium transition-colors",
+            "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors text-sm sm:text-base",
             billingPeriod === 'monthly'
               ? "bg-blue-500 text-white"
               : "text-gray-400 hover:text-white"
@@ -79,7 +79,7 @@ export default function PricingSection() {
         <button
           onClick={() => setBillingPeriod('yearly')}
           className={cn(
-            "px-4 py-2 rounded-lg font-medium transition-colors",
+            "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors text-sm sm:text-base",
             billingPeriod === 'yearly'
               ? "bg-blue-500 text-white"
               : "text-gray-400 hover:text-white"
@@ -90,44 +90,44 @@ export default function PricingSection() {
       </div>
 
       {/* Pricing Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-sm mx-auto md:max-w-none">
         {plans.map((plan) => (
           <div
             key={plan.tier}
             className={cn(
-              "relative bg-[#0E1221] rounded-2xl p-8 border-2 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5",
+              "relative bg-[#0E1221] rounded-2xl p-6 sm:p-8 border-2 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5",
               plan.isPopular
                 ? "border-blue-500"
                 : "border-transparent hover:border-purple-500/30"
             )}
           >
             {plan.isPopular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-sm px-3 py-1 rounded-full">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
                 MOST POPULAR
               </div>
             )}
 
-            <div className="mb-8">
-              <h3 className="text-xl font-bold text-white mb-4">{plan.tier}</h3>
+            <div className="mb-6 sm:mb-8">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">{plan.tier}</h3>
               <div className="flex items-baseline mb-2">
-                <span className="text-4xl font-bold text-white">
+                <span className="text-3xl sm:text-4xl font-bold text-white">
                   ${billingPeriod === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
                 </span>
-                <span className="text-gray-400 ml-2">
+                <span className="text-gray-400 text-sm sm:text-base ml-1 sm:ml-2">
                   /{billingPeriod === 'monthly' ? 'month' : 'year'}
                 </span>
               </div>
               {billingPeriod === 'yearly' && (
-                <p className="text-sm text-blue-400">
+                <p className="text-xs sm:text-sm text-blue-400">
                   Save {plan.yearlyDiscount}% with annual billing
                 </p>
               )}
             </div>
 
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {plan.features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-3 text-gray-300">
-                  <Check className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                <li key={index} className="flex items-center gap-2 sm:gap-3 text-gray-300 text-sm sm:text-base">
+                  <Check className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
                   {feature}
                 </li>
               ))}
@@ -135,7 +135,7 @@ export default function PricingSection() {
 
             <button
               className={cn(
-                "w-full py-3 rounded-lg font-medium transition-colors",
+                "w-full py-2.5 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base",
                 plan.isPopular
                   ? "bg-blue-500 text-white hover:bg-blue-600"
                   : "bg-[#1E2537] text-white hover:bg-[#2A3447]"

@@ -61,7 +61,7 @@ export default function Navbar() {
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="fixed w-full backdrop-blur-lg bg-black/20 border-b border-white/10 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-          <div className="flex items-center justify-between h-14 lg:h-16">
+          <div className="flex items-center justify-between h-12 lg:h-14">
             {/* Logo - Left */}
             <div className="flex items-center">
               <button 
@@ -81,7 +81,7 @@ export default function Navbar() {
                     <motion.button
                       key={item.name}
                       onClick={() => handleNavClick(item.href, item.isScroll)}
-                      className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black rounded-lg px-2 py-1"
+                      className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-2 py-1"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       aria-label={`Go to ${item.name} section`}
@@ -98,7 +98,7 @@ export default function Navbar() {
             <div className="hidden md:block">
               <motion.button 
                 onClick={() => navigate('/signup')}
-                className="bg-purple-600 hover:bg-purple-700 px-3 py-1.5 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black disabled:opacity-50"
+                className="bg-purple-600 hover:bg-purple-700 px-3 py-1.5 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-50"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Sign up"
@@ -112,7 +112,7 @@ export default function Navbar() {
             <div className="md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1"
+                className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               >
                 <AnimatePresence mode="wait">
@@ -171,14 +171,14 @@ export default function Navbar() {
                   <div className="flex items-center justify-between">
                     <button 
                       onClick={() => handleNavClick('/#hero', true)}
-                      className="flex items-center -m-1.5 p-1.5 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[#0a0118] rounded-lg"
+                      className="flex items-center -m-1.5 p-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] rounded-lg"
                       aria-label="Go to home page"
                     >
-                      <Logo />
+                      <Logo/>
                     </button>
                     <button
                       type="button"
-                      className="-m-2.5 rounded-md p-2.5 text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[#0a0118]"
+                      className="-m-2.5 rounded-md p-2.5 text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118]"
                       onClick={() => setMobileMenuOpen(false)}
                       aria-label="Close menu"
                     >
@@ -192,7 +192,7 @@ export default function Navbar() {
                           <motion.button
                             key={item.name}
                             onClick={() => handleNavClick(item.href, item.isScroll)}
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#1E2537] w-full text-left focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#1E2537] w-full text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
                             whileHover={{ x: 10 }}
                             whileTap={{ scale: 0.95 }}
                             aria-label={`Go to ${item.name} section`}
@@ -208,7 +208,7 @@ export default function Navbar() {
                             setMobileMenuOpen(false);
                             navigate('/signup');
                           }}
-                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 w-full focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
+                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           aria-label="Sign up"
