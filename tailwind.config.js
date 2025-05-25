@@ -7,6 +7,20 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        primary: {
+          50: '#e6f0ff',
+          100: '#cce0ff',
+          200: '#99c2ff',
+          300: '#66a3ff',
+          400: '#3385ff',
+          500: '#0050b1',  // Main color
+          600: '#004099',
+          700: '#003080',
+          800: '#002066',
+          900: '#001033',
+        },
+      },
       fontFamily: {
         'press-start-2p': ['"Press Start 2P"', 'cursive'],
         'sans': ['Inter', 'system-ui', 'sans-serif'],

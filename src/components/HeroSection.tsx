@@ -5,35 +5,57 @@ import { Link } from 'react-router-dom';
 import BackgroundEffects from './BackgroundEffects';
 import ParticleEffects from './ParticleEffects';
 import { scrollToSection } from '../lib/utils';
+import RotatingCarousel from './RotatingCarousel';
+import { TitleEffect } from './TitleEffect';
 
 const gamingCards = [
   {
     src: 'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?auto=format&fit=crop&q=80&w=2940',
     title: 'Premium Gaming Setup',
     category: 'Hardware',
-    gradient: 'from-purple-500/20 to-purple-900/20',
-    shadow: 'shadow-[0_0_15px_rgba(147,51,234,0.1)] group-hover:shadow-[0_0_25px_rgba(147,51,234,0.2)]'
+    description: 'Experience ultra-fast performance and stunning graphics with our top-tier cloud gaming rigs.'
   },
   {
     src: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80&w=2940',
     title: 'Racing Experience',
     category: 'Racing',
-    gradient: 'from-blue-500/20 to-blue-900/20',
-    shadow: 'shadow-[0_0_15px_rgba(59,130,246,0.1)] group-hover:shadow-[0_0_25px_rgba(59,130,246,0.2)]'
+    description: 'Feel the adrenaline of high-speed racing games with zero lag and immersive controls.'
   },
   {
     src: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&q=80&w=2940',
     title: 'FPS Gaming',
     category: 'Action',
-    gradient: 'from-red-500/20 to-red-900/20',
-    shadow: 'shadow-[0_0_15px_rgba(239,68,68,0.1)] group-hover:shadow-[0_0_25px_rgba(239,68,68,0.2)]'
+    description: 'Dominate the battlefield with lightning-fast response times and crystal-clear visuals.'
   },
   {
     src: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=2940',
     title: 'Strategy Games',
     category: 'Strategy',
-    gradient: 'from-green-500/20 to-green-900/20',
-    shadow: 'shadow-[0_0_15px_rgba(34,197,94,0.1)] group-hover:shadow-[0_0_25px_rgba(34,197,94,0.2)]'
+    description: 'Plan, build, and conquer with seamless gameplay and powerful cloud resources.'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=2940',
+    title: 'Adventure Worlds',
+    category: 'Adventure',
+    description: 'Explore vast open worlds and embark on epic quests from any device.'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&q=80&w=2940',
+    title: 'Indie Gems',
+    category: 'Indie',
+    description: 'Discover and play the latest indie hits with smooth, uninterrupted streaming.'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&q=80&w=2940',
+    title: 'Sports Arena',
+    category: 'Sports',
+    description: 'Compete in your favorite sports games with friends and rivals worldwide.'
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?auto=format&fit=crop&q=80&w=2940',
+    title: 'Retro Classics',
+    category: 'Retro',
+    description: 'Relive the golden age of gaming with classic titles, all in the cloud.'
   }
 ];
 
@@ -53,17 +75,15 @@ export default function HeroSection() {
           Next-Gen Cloud Gaming
         </motion.p>
         
-        <motion.h1 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight font-press-start-2p leading-relaxed"
-        >
-          <span className="text-white">High-End Gaming </span>
-          <span className="bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 text-transparent bg-clip-text animate-gradient">Without</span>
-          <br />
-          <span className="bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 text-transparent bg-clip-text animate-gradient">The Hardware</span>
-        </motion.h1>
+        <div className="space-y-2">
+          <h2 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-8 font-press-start-2p">
+            High-End Gaming
+            <br />
+            Without
+            <br />
+            The Hardware
+          </h2>
+        </div>
         
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -113,73 +133,11 @@ export default function HeroSection() {
         transition={{ duration: 0.8, delay: 0.8 }}
         className="relative z-10 mt-16 w-full max-w-6xl mx-auto"
       >
-        <div className="flex flex-row justify-center -space-x-4 md:-space-x-8">
-          {gamingCards.map((card, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ 
-                duration: 0.5, 
-                delay: 0.8 + index * 0.1,
-                type: "spring",
-                stiffness: 100
-              }}
-              className="group relative w-64 md:w-72 hover:z-10 transition-all duration-300"
-            >
-              <div className={`bg-black/60 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-purple-500/50 
-                transition-all duration-300 ${card.shadow} hover:translate-y-[-5px] hover:bg-black/70`}>
-                <div className={`absolute inset-0 bg-gradient-to-r ${card.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-300`} />
-                <div className="relative flex flex-col">
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={card.src}
-                      alt={card.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-4 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="px-3 py-1.5 rounded-full text-xs font-medium bg-purple-500/30 text-purple-300 border border-purple-500/30">
-                        {card.category}
-                      </span>
-                      <motion.div 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ duration: 0.3, delay: 1.2 + index * 0.1 }}
-                        className="h-6 w-6 rounded-full bg-purple-500/30 border border-purple-500/40 flex items-center justify-center"
-                      >
-                        <span className="text-xs font-bold text-purple-300">{index + 1}</span>
-                      </motion.div>
-                    </div>
-                    <h3 className="text-lg font-bold text-white group-hover:text-purple-200 transition-colors duration-300 line-clamp-1">
-                      {card.title}
-                    </h3>
-                    <p className="text-xs text-gray-300 line-clamp-2 group-hover:text-gray-200 transition-colors duration-300">
-                      Experience the ultimate gaming setup with our cloud-based platform.
-                    </p>
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <button
-                        onClick={() => scrollToSection('faq')}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg 
-                          bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/30 hover:border-purple-500/50
-                          transition-all duration-200 text-sm text-purple-300 hover:text-purple-200"
-                      >
-                        <span className="font-medium">Learn More</span>
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </button>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        <RotatingCarousel 
+          items={gamingCards}
+          autoRotate={true}
+          rotationSpeed={5000}
+        />
         
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

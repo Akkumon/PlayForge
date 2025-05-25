@@ -1,45 +1,74 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
+import { motion, useMotionValue, useTransform, useSpring, MotionStyle } from 'framer-motion';
 
-interface TiltConfig {
-  max: number;
-  scale: number;
-  speed: number;
+interface TiltEffectOptions {
+  max?: number;
+  scale?: number;
+  speed?: number;
+  perspective?: number;
 }
 
-export function useTiltEffect(config: TiltConfig = { max: 15, scale: 1.05, speed: 400 }) {
-  const [tiltStyle, setTiltStyle] = useState({
-    transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)',
-    transition: `transform ${config.speed}ms cubic-bezier(.03,.98,.52,.99)`,
-  });
+export const useTiltEffect = ({ 
+  max = 15, 
+  scale = 1.05, 
+  speed = 400,
+  perspective = 1000 
+}: TiltEffectOptions = {}) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-  const onMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    const element = e.currentTarget;
-    const rect = element.getBoundingClientRect();
-    const width = element.offsetWidth;
-    const height = element.offsetHeight;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = (mouseX / width - 0.5) * 2;
-    const yPct = (mouseY / height - 0.5) * 2;
-    const xRotate = xPct * config.max;
-    const yRotate = -yPct * config.max;
+  // Invert the rotation values to create the opposite tilt effect
+  const rotateX = useTransform(y, [-100, 100], [-max, max]);
+  const rotateY = useTransform(x, [-100, 100], [max, -max]);
 
-    setTiltStyle({
-      transform: `perspective(1000px) rotateX(${yRotate}deg) rotateY(${xRotate}deg) scale(${config.scale})`,
-      transition: `transform ${config.speed}ms cubic-bezier(.03,.98,.52,.99)`,
-    });
-  }, [config.max, config.scale, config.speed]);
+  // Add a subtle scale effect that follows the mouse
+  const scaleX = useTransform(x, [-100, 0, 100], [1 - scale/2, 1, 1 - scale/2]);
+  const scaleY = useTransform(y, [-100, 0, 100], [1 - scale/2, 1, 1 - scale/2]);
 
-  const onMouseLeave = useCallback(() => {
-    setTiltStyle({
-      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)',
-      transition: `transform ${config.speed}ms cubic-bezier(.03,.98,.52,.99)`,
-    });
-  }, [config.speed]);
-
-  return {
-    tiltStyle,
-    onMouseMove,
-    onMouseLeave,
+  // Spring configuration for smooth animation
+  const springConfig = { 
+    damping: 20, 
+    stiffness: 200,
+    mass: 0.5
   };
-}
+
+  // Apply spring physics to all transforms
+  const rotateXSpring = useSpring(rotateX, springConfig);
+  const rotateYSpring = useSpring(rotateY, springConfig);
+  const scaleXSpring = useSpring(scaleX, springConfig);
+  const scaleYSpring = useSpring(scaleY, springConfig);
+
+  const onMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const mouseX = event.clientX - centerX;
+    const mouseY = event.clientY - centerY;
+
+    // Normalize the values to [-100, 100] range
+    const normalizedX = (mouseX / (rect.width / 2)) * 100;
+    const normalizedY = (mouseY / (rect.height / 2)) * 100;
+
+    x.set(normalizedX);
+    y.set(normalizedY);
+  };
+
+  const onMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  const tiltStyle: MotionStyle = {
+    transform: `
+      perspective(${perspective}px)
+      rotateX(${rotateXSpring}deg)
+      rotateY(${rotateYSpring}deg)
+      scale(${scaleXSpring}, ${scaleYSpring})
+    `,
+    transformStyle: 'preserve-3d' as const,
+    transition: `transform ${speed}ms cubic-bezier(0.17, 0.67, 0.83, 0.67)`,
+    willChange: 'transform',
+  };
+
+  return { tiltStyle, onMouseMove, onMouseLeave };
+};

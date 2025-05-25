@@ -1,7 +1,9 @@
 import React from 'react';
+import { Toaster } from 'react-hot-toast';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Chat from './chat/Chat';
+import SubtleAnimatedPattern from './SubtleAnimatedPattern';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -9,14 +11,18 @@ interface MainLayoutProps {
 
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
-    <div className="min-h-screen bg-[#0a0118] text-white overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black/50 to-blue-900/20 pointer-events-none" />
+    <div className="relative min-h-screen overflow-hidden bg-black">
+      {/* Subtle Animated Background */}
+      <SubtleAnimatedPattern />
+
+      {/* Content */}
       <div className="relative z-10">
         <Navbar />
         <main>{children}</main>
         <Footer />
         <Chat />
       </div>
+      <Toaster position="bottom-right" />
     </div>
   );
 }

@@ -13,7 +13,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       className="fixed top-4 right-4 z-50 p-2 rounded-full bg-white/10 backdrop-blur-sm
         border border-white/20 shadow-lg hover:bg-white/20 transition-colors duration-200
-        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-transparent"
+        focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-transparent"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
     >
       <motion.div
