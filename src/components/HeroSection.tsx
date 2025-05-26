@@ -65,18 +65,18 @@ export default function HeroSection() {
       <BackgroundEffects />
       <ParticleEffects />
       
-      <div className="relative z-10 text-center max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto space-y-8 sm:space-y-10">
+      <div className="relative z-10 text-center max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto space-y-6 sm:space-y-8">
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-purple-400 font-medium tracking-wide uppercase text-xs sm:text-sm font-press-start-2p mb-2"
+          className="text-purple-400 font-medium tracking-wide uppercase text-xs sm:text-sm font-press-start-2p"
         >
           Next-Gen Cloud Gaming
         </motion.p>
         
-        <div className="space-y-4 sm:space-y-6">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-tight font-press-start-2p">
+        <div className="space-y-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 sm:mb-6 lg:mb-8 font-press-start-2p">
             High-End Gaming
             <br className="sm:hidden"/>
             Without
@@ -89,7 +89,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-sm sm:text-base md:text-lg sm:text-xl max-w-full sm:max-w-md md:max-w-lg mx-auto font-light leading-relaxed px-4 sm:px-0 mt-4 sm:mt-6"
+          className="text-sm sm:text-base md:text-lg sm:text-xl max-w-full sm:max-w-md md:max-w-lg mx-auto font-light leading-relaxed px-4 sm:px-0"
         >
           Access premium gaming stations from anywhere. Play the latest titles
           without investing in expensive equipment.
