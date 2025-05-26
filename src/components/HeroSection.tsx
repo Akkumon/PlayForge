@@ -76,13 +76,17 @@ export default function HeroSection() {
         </motion.p>
         
         <div className="space-y-2">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-4 sm:mb-6 lg:mb-8 font-press-start-2p">
-            High-End Gaming
-            <br className="sm:hidden"/>
-            Without
-            <br className="sm:hidden"/>
-            The Hardware
-          </h2>
+          <div className="flex flex-col items-center justify-center gap-2">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-press-start-2p leading-none">
+              High-End Gaming
+            </h2>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-purple-500 font-press-start-2p leading-none">
+              Without
+            </h2>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-purple-400 font-press-start-2p leading-none">
+              The Hardware
+            </h2>
+          </div>
         </div>
         
         <motion.p 
