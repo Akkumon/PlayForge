@@ -1,8 +1,9 @@
 import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, MapPin, Calendar, X, ChevronLeft, ChevronRight as ChevronRightIcon, Clock, Check, MemoryStick, Gamepad2, Star } from 'lucide-react';
+import { ChevronRight, MapPin, Calendar, X, ChevronLeft, ChevronRight as ChevronRightIcon, Clock, Check, MemoryStick, Gamepad2, Star, Save } from 'lucide-react';
 import OptimizedImage from './common/OptimizedImage';
 import { StationCardSkeleton } from './ui/Skeleton';
+import { Link } from 'react-router-dom';
 
 const BookingModal = React.lazy(() => import('./BookingModal'));
 
@@ -138,8 +139,8 @@ export default function StationsSection() {
   };
 
   return (
-    <section id="stations" className="py-12 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/20 to-black pointer-events-none" />
+    <section id="stations" className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-100 via-purple-200/20 to-gray-100 dark:from-black dark:via-purple-900/20 dark:to-black pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-8 sm:mb-16">
@@ -147,7 +148,7 @@ export default function StationsSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-purple-400 font-medium mb-4"
+            className="text-purple-700 dark:text-purple-400 font-medium mb-4"
           >
             Gaming Stations
           </motion.h2>
@@ -156,7 +157,7 @@ export default function StationsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 font-press-start-2p leading-relaxed"
+            className="text-gray-900 dark:text-white text-3xl sm:text-4xl md:text-5xl font-bold mb-6 font-press-start-2p leading-relaxed"
           >
             Premium Hardware At Your Fingertips
           </motion.h3>
@@ -165,7 +166,7 @@ export default function StationsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 text-base sm:text-lg max-w-3xl mx-auto"
+            className="text-gray-700 dark:text-gray-400 text-base sm:text-lg max-w-3xl mx-auto"
           >
             Choose from our selection of high-performance gaming stations, each equipped with top-tier
             components for the ultimate gaming experience.
@@ -188,8 +189,8 @@ export default function StationsSection() {
                 viewport={{ once: true }}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300
-                  hover:shadow-[0_0_30px_rgba(147,51,234,0.1)] focus-within:ring-2 focus-within:ring-purple-500"
+                className="group bg-white dark:bg-[#0f1729] rounded-2xl overflow-hidden border border-gray-200 dark:border-white/5 hover:border-purple-600 dark:hover:border-purple-500/30 transition-all duration-300
+                  hover:shadow-lg hover:shadow-gray-300/30 dark:hover:shadow-[0_0_30px_rgba(147,51,234,0.1)] focus-within:ring-2 focus-within:ring-purple-500"
                 role="article"
                 aria-label={`Gaming station: ${station.name}`}
               >
@@ -216,68 +217,50 @@ export default function StationsSection() {
                     />
                   </div>
                 </div>
-                <div className="p-4 sm:p-6">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-300">
-                      {station.name}
-                    </h3>
-                    <div className="flex items-center gap-1" role="img" aria-label={`Rating: ${station.rating} out of 5`}>
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="text-white">{station.rating}</span>
-                    </div>
+                <div className="p-6">
+                  <h4 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-3">{station.name}</h4>
+                  <div className="text-sm text-gray-700 dark:text-gray-400 space-y-2">
+                    <p className="flex items-center gap-2"><MemoryStick className="w-4 h-4 text-purple-600 dark:text-purple-400" />{station.specs.ram}</p>
+                    <p className="flex items-center gap-2"><Gamepad2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />{station.specs.gpu}</p>
+                    <p className="flex items-center gap-2"><Save className="w-4 h-4 text-purple-600 dark:text-purple-400" />{station.specs.storage}</p>
+                    <p className="flex items-center gap-2"><Star className="w-4 h-4 text-yellow-500 dark:text-yellow-400" />{station.rating}</p>
                   </div>
-                  <div className="space-y-3 mb-4">
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <MemoryStick className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm">{station.specs.ram}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <Gamepad2 className="w-4 h-4 text-purple-400" />
-                      <span className="text-sm">{station.specs.gpu}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-400">
-                      <span className="text-sm">{station.specs.storage}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-3">
-                    <button 
-                      onClick={() => {
-                        document.getElementById('hero')?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                      className="flex-1 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors duration-200
-                        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0f1729]"
-                      aria-label={`View details for ${station.name}`}
-                    >
-                      View Details
-                    </button>
-                    <button 
-                      onClick={() => handleStationClick(station)}
-                      className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200
-                        focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0f1729]
-                        ${
-                          station.status === 'available'
-                            ? 'bg-purple-600 hover:bg-purple-700 text-white'
-                            : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-                        }`}
-                      disabled={station.status !== 'available'}
-                      aria-label={station.status === 'available' ? `Book ${station.name}` : `${station.name} is currently occupied`}
-                    >
-                      {station.status === 'available' ? 'Book Now' : 'Occupied'}
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleStationClick(station)}
+                    disabled={station.status === 'occupied'}
+                    className={`mt-6 w-full px-4 py-2 rounded-lg font-medium text-white transition-colors duration-200 
+                      ${station.status === 'available' 
+                        ? 'bg-purple-600 hover:bg-purple-700 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50'
+                        : 'bg-gray-400 dark:bg-gray-700 cursor-not-allowed'
+                      }`}
+                  >
+                    {station.status === 'available' ? 'Book Now' : 'Occupied'}
+                  </button>
                 </div>
               </motion.div>
             ))
           )}
         </div>
+        
+        {/* View All Stations Button */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-12 text-center"
+        >
+          <Link
+            to="/stations"
+            className="group inline-flex items-center justify-center gap-2 text-lg font-medium text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors"
+          >
+            View All Stations
+            <ChevronRightIcon className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
 
-      <Suspense fallback={
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center">
-          <div className="text-white animate-pulse">Loading...</div>
-        </div>
-      }>
+      <Suspense fallback={null}>
         {selectedStation && (
           <BookingModal
             isOpen={isModalOpen}
@@ -287,9 +270,10 @@ export default function StationsSection() {
           />
         )}
       </Suspense>
-      <SuccessNotification 
-        isVisible={showSuccess} 
-        onClose={() => setShowSuccess(false)} 
+
+      <SuccessNotification
+        isVisible={showSuccess}
+        onClose={() => setShowSuccess(false)}
       />
     </section>
   );

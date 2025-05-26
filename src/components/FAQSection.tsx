@@ -5,9 +5,9 @@ interface FAQItemProps {
 
 const FAQItem = ({ question, answer }: FAQItemProps) => {
   return (
-    <div className="bg-[#0E1221] rounded-2xl p-6 sm:p-8 border border-transparent hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5">
-      <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 sm:mb-4">{question}</h3>
-      <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{answer}</p>
+    <div className="bg-white dark:bg-[#0E1221] rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-transparent hover:border-purple-600 dark:hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-gray-300/30 dark:hover:shadow-purple-500/5">
+      <h3 className="text-gray-900 dark:text-white text-lg sm:text-xl font-semibold mb-3 sm:mb-4">{question}</h3>
+      <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{answer}</p>
     </div>
   );
 };
@@ -43,10 +43,10 @@ export const FAQSection = () => {
   return (
     <section id="faq" className="py-16 sm:py-20 lg:py-24 container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12 sm:mb-16">
-        <span className="bg-[#1E2537] text-blue-400 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">
+        <span className="bg-gray-200 dark:bg-[#1E2537] text-blue-700 dark:text-blue-400 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium">
           FAQ
         </span>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-3 sm:mt-4 leading-tight">
+        <h2 className="text-gray-900 dark:text-white text-3xl sm:text-4xl md:text-5xl font-bold mt-3 sm:mt-4 leading-tight">
           Frequently Asked Questions
         </h2>
       </div>

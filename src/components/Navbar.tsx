@@ -6,23 +6,35 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { scrollToSection } from '../lib/utils';
 import Logo from './Logo';
+import { ThemeToggle } from './ui/ThemeToggle';
 
-const navItems = [
+interface NavItem {
+  name: string;
+  href: string;
+  isScroll: boolean;
+  requiresAuth?: boolean;
+}
+
+const navItems: NavItem[] = [
   { name: 'Home', href: '/#hero', isScroll: true },
   { name: 'Features', href: '/#features', isScroll: true },
   { name: 'Stations', href: '/stations', isScroll: false },
   { name: 'Pricing', href: '/#pricing', isScroll: true },
   { name: 'FAQ', href: '/#faq', isScroll: true },
-] as const;
+];
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // This would come from your auth context
   const location = useLocation();
   const navigate = useNavigate();
 
   // Memoize navigation items to prevent unnecessary re-renders
-  const navigationItems = useMemo(() => navItems, []);
+  const navigationItems = useMemo(() => 
+    navItems.filter(item => !item.requiresAuth || isLoggedIn), 
+    [isLoggedIn]
+  );
 
   const handleNavClick = useCallback(async (href: string, isScroll?: boolean) => {
     setMobileMenuOpen(false);
@@ -59,14 +71,14 @@ export default function Navbar() {
 
   return (
     <header className="absolute inset-x-0 top-0 z-50">
-      <nav className="fixed w-full backdrop-blur-lg bg-black/20 border-b border-white/10 z-50">
+      <nav className="fixed w-full backdrop-blur-lg bg-white/80 dark:bg-black/20 border-b border-gray-200 dark:border-white/10 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
           <div className="flex items-center justify-between h-12 lg:h-14">
             {/* Logo - Left */}
             <div className="flex items-center">
               <button 
                 onClick={() => handleNavClick('/#hero', true)}
-                className="flex items-center focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg"
+                className="flex items-center focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 rounded-lg"
                 aria-label="Go to home page"
               >
                 <Logo />
@@ -81,7 +93,7 @@ export default function Navbar() {
                     <motion.button
                       key={item.name}
                       onClick={() => handleNavClick(item.href, item.isScroll)}
-                      className="text-gray-300 hover:text-white transition-colors duration-200 text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg px-2 py-1"
+                      className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors duration-200 text-sm lg:text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 rounded-lg px-2 py-1"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       aria-label={`Go to ${item.name} section`}
@@ -94,11 +106,12 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Sign Up Button - Right */}
-            <div className="hidden md:block">
+            {/* Right side buttons */}
+            <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               <motion.button 
                 onClick={() => navigate('/signup')}
-                className="bg-purple-600 hover:bg-purple-700 px-3 py-1.5 rounded-lg text-sm lg:text-base font-medium transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black disabled:opacity-50"
+                className="bg-purple-600 hover:bg-purple-700 px-3 py-1.5 rounded-lg text-sm lg:text-base font-medium text-white transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 disabled:opacity-50"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Sign up"
@@ -109,10 +122,11 @@ export default function Navbar() {
             </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div className="md:hidden flex items-center gap-4">
+              <ThemeToggle />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black rounded-lg p-1"
+                className="text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900 rounded-lg p-1"
                 aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
               >
                 <AnimatePresence mode="wait">
@@ -160,7 +174,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
-            <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[#0a0118] px-6 py-6 sm:max-w-sm">
+            <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white dark:bg-[#0a0118] px-6 py-6 sm:max-w-sm">
               <AnimatePresence>
                 <motion.div
                   initial={{ x: "100%" }}
@@ -171,14 +185,14 @@ export default function Navbar() {
                   <div className="flex items-center justify-between">
                     <button 
                       onClick={() => handleNavClick('/#hero', true)}
-                      className="flex items-center -m-1.5 p-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] rounded-lg"
+                      className="flex items-center -m-1.5 p-1.5 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0118] rounded-lg"
                       aria-label="Go to home page"
                     >
                       <Logo/>
                     </button>
                     <button
                       type="button"
-                      className="-m-2.5 rounded-md p-2.5 text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118]"
+                      className="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0118]"
                       onClick={() => setMobileMenuOpen(false)}
                       aria-label="Close menu"
                     >
@@ -186,13 +200,13 @@ export default function Navbar() {
                     </button>
                   </div>
                   <div className="mt-6 flow-root">
-                    <div className="-my-6 divide-y divide-gray-500/10">
+                    <div className="-my-6 divide-y divide-gray-200 dark:divide-gray-700">
                       <div className="space-y-2 py-6">
                         {navigationItems.map((item) => (
                           <motion.button
                             key={item.name}
                             onClick={() => handleNavClick(item.href, item.isScroll)}
-                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white hover:bg-[#1E2537] w-full text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
+                            className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 w-full text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0118] disabled:opacity-50"
                             whileHover={{ x: 10 }}
                             whileTap={{ scale: 0.95 }}
                             aria-label={`Go to ${item.name} section`}
@@ -208,7 +222,7 @@ export default function Navbar() {
                             setMobileMenuOpen(false);
                             navigate('/signup');
                           }}
-                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-[#0a0118] disabled:opacity-50"
+                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-700 w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-[#0a0118] disabled:opacity-50"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           aria-label="Sign up"

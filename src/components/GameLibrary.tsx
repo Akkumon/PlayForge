@@ -75,23 +75,23 @@ export default function GameLibrary() {
     <section className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-white mb-6 font-press-start-2p text-3xl sm:text-4xl leading-relaxed">
+          <h2 className="text-gray-900 dark:text-white text-4xl font-bold mb-6 font-press-start-2p text-3xl sm:text-4xl leading-relaxed">
             Game Library
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-700 dark:text-gray-400 text-lg">
             Explore our extensive collection of premium games available for instant play.
           </p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400" />
             <input
               type="text"
               placeholder="Search games..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1E2537] text-white pl-12 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full bg-gray-100 dark:bg-[#1E2537] text-gray-900 dark:text-white pl-12 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
@@ -99,7 +99,7 @@ export default function GameLibrary() {
             <select
               value={selectedGenre}
               onChange={(e) => setSelectedGenre(e.target.value)}
-              className="bg-[#1E2537] text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="bg-gray-100 dark:bg-[#1E2537] text-gray-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               {genres.map(genre => (
                 <option key={genre} value={genre}>{genre}</option>
@@ -109,7 +109,7 @@ export default function GameLibrary() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'rating' | 'releaseYear')}
-              className="bg-[#1E2537] text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="bg-gray-100 dark:bg-[#1E2537] text-gray-900 dark:text-white px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
               <option value="rating">Top Rated</option>
               <option value="releaseYear">Newest</option>
@@ -135,7 +135,7 @@ export default function GameLibrary() {
                   transition: { duration: 0.2 }
                 }}
                 transition={{ duration: 0.3 }}
-                className="group bg-[#0f1729] rounded-2xl overflow-hidden border border-white/5 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10"
+                className="group bg-white dark:bg-[#0f1729] rounded-2xl overflow-hidden border border-gray-200 dark:border-white/5 hover:border-purple-600 dark:hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-gray-300/30 dark:hover:shadow-purple-500/10"
                 style={tiltStyle}
                 onMouseMove={onMouseMove}
                 onMouseLeave={onMouseLeave}
@@ -146,19 +146,19 @@ export default function GameLibrary() {
                     alt={game.title}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f1729] to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-100 dark:from-[#0f1729] to-transparent" />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors duration-300">{game.title}</h3>
+                  <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-2 group-hover:text-purple-700 dark:group-hover:text-purple-400 transition-colors duration-300">{game.title}</h3>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-purple-400 group-hover:text-purple-300 transition-colors duration-300">{game.genre}</span>
-                    <span className="text-yellow-400 group-hover:text-yellow-300 transition-colors duration-300">★ {game.rating}</span>
+                    <span className="text-purple-700 dark:text-purple-400 group-hover:text-purple-800 dark:group-hover:text-purple-300 transition-colors duration-300">{game.genre}</span>
+                    <span className="text-yellow-600 dark:text-yellow-400 group-hover:text-yellow-700 dark:group-hover:text-yellow-300 transition-colors duration-300">★ {game.rating}</span>
                   </div>
                   <motion.a
                     href="#hero"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm font-medium transition-colors duration-200"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors duration-200"
                   >
                     <Play className="w-4 h-4" />
                     Play Now

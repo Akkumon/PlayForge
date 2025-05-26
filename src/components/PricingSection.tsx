@@ -55,10 +55,10 @@ export default function PricingSection() {
   return (
     <div id="pricing" className="py-16 sm:py-20 lg:py-24 container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12 sm:mb-16">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-press-start-2p leading-tight">
+        <h2 className="text-gray-900 dark:text-white text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-press-start-2p leading-tight">
           Pricing Plans
         </h2>
-        <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto">
+        <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
           Choose the perfect plan for your gaming needs
         </p>
       </div>
@@ -70,8 +70,8 @@ export default function PricingSection() {
           className={cn(
             "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors text-sm sm:text-base",
             billingPeriod === 'monthly'
-              ? "bg-blue-500 text-white"
-              : "text-gray-400 hover:text-white"
+              ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              : "text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           )}
         >
           Monthly Plans
@@ -81,8 +81,8 @@ export default function PricingSection() {
           className={cn(
             "px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors text-sm sm:text-base",
             billingPeriod === 'yearly'
-              ? "bg-blue-500 text-white"
-              : "text-gray-400 hover:text-white"
+              ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+              : "text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           )}
         >
           Yearly Plans
@@ -95,30 +95,30 @@ export default function PricingSection() {
           <div
             key={plan.tier}
             className={cn(
-              "relative bg-[#0E1221] rounded-2xl p-6 sm:p-8 border-2 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5",
+              "relative bg-white dark:bg-[#0E1221] rounded-2xl p-6 sm:p-8 border-2 transition-all duration-300 hover:shadow-lg",
               plan.isPopular
-                ? "border-blue-500"
-                : "border-transparent hover:border-purple-500/30"
+                ? "border-blue-600 dark:border-blue-500 hover:shadow-blue-300/30 dark:hover:shadow-purple-500/5"
+                : "border-gray-200 dark:border-transparent hover:border-purple-600 dark:hover:border-purple-500/30 hover:shadow-gray-300/30 dark:hover:shadow-purple-500/5"
             )}
           >
             {plan.isPopular && (
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-500 text-white text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 dark:bg-blue-500 text-white text-xs sm:text-sm px-2 sm:px-3 py-0.5 sm:py-1 rounded-full">
                 MOST POPULAR
               </div>
             )}
 
             <div className="mb-6 sm:mb-8">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4">{plan.tier}</h3>
+              <h3 className="text-gray-900 dark:text-white text-lg sm:text-xl font-bold mb-3 sm:mb-4">{plan.tier}</h3>
               <div className="flex items-baseline mb-2">
-                <span className="text-3xl sm:text-4xl font-bold text-white">
+                <span className="text-gray-900 dark:text-white text-3xl sm:text-4xl font-bold">
                   ${billingPeriod === 'monthly' ? plan.monthlyPrice : plan.yearlyPrice}
                 </span>
-                <span className="text-gray-400 text-sm sm:text-base ml-1 sm:ml-2">
+                <span className="text-gray-700 dark:text-gray-400 text-sm sm:text-base ml-1 sm:ml-2">
                   /{billingPeriod === 'monthly' ? 'month' : 'year'}
                 </span>
               </div>
               {billingPeriod === 'yearly' && (
-                <p className="text-xs sm:text-sm text-blue-400">
+                <p className="text-blue-700 dark:text-blue-400 text-xs sm:text-sm">
                   Save {plan.yearlyDiscount}% with annual billing
                 </p>
               )}
@@ -126,8 +126,8 @@ export default function PricingSection() {
 
             <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
               {plan.features.map((feature, index) => (
-                <li key={index} className="flex items-center gap-2 sm:gap-3 text-gray-300 text-sm sm:text-base">
-                  <Check className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0" />
+                <li key={index} className="flex items-center gap-2 sm:gap-3 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+                  <Check className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
                   {feature}
                 </li>
               ))}
@@ -137,8 +137,8 @@ export default function PricingSection() {
               className={cn(
                 "w-full py-2.5 sm:py-3 rounded-lg font-medium transition-colors text-sm sm:text-base",
                 plan.isPopular
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
-                  : "bg-[#1E2537] text-white hover:bg-[#2A3447]"
+                  ? "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  : "bg-gray-200 text-gray-900 hover:bg-gray-300 dark:bg-[#1E2537] dark:text-white dark:hover:bg-[#2A3447]"
               )}
               onClick={() => {
                 document.getElementById('hero')?.scrollIntoView({ 

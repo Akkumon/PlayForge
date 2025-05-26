@@ -61,7 +61,7 @@ const gamingCards = [
 
 export default function HeroSection() {
   return (
-    <div id="hero" className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-32 font-sans">
+    <div id="hero" className="relative overflow-hidden flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-32 font-sans">
       <BackgroundEffects />
       <ParticleEffects />
       
@@ -70,21 +70,21 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-purple-400 font-medium tracking-wide uppercase text-xs sm:text-sm font-press-start-2p"
+          className="text-purple-600 dark:text-purple-400 font-medium tracking-wide uppercase text-xs sm:text-sm font-press-start-2p"
         >
-          Next-Gen Cloud Gaming
+          Welcome to PlayForge
         </motion.p>
         
         <div className="space-y-2">
           <div className="flex flex-col items-center justify-center gap-2">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-press-start-2p leading-none">
-              High-End Gaming
+            <h2 className="text-gray-900 dark:text-white text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight font-press-start-2p leading-none">
+              Game Without Limits.
             </h2>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-purple-500 font-press-start-2p leading-none">
-              Without
+            <h2 className="text-purple-700 dark:text-purple-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight font-press-start-2p leading-none">
+              Book Instantly.
             </h2>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-purple-400 font-press-start-2p leading-none">
-              The Hardware
+            <h2 className="text-purple-600 dark:text-purple-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight font-press-start-2p leading-none">
+              Play at Peak.
             </h2>
           </div>
         </div>
@@ -93,10 +93,9 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-sm sm:text-base md:text-lg sm:text-xl max-w-full sm:max-w-md md:max-w-lg mx-auto font-light leading-relaxed px-4 sm:px-0"
+          className="text-gray-700 dark:text-gray-400 text-xs sm:text-sm md:text-base max-w-full sm:max-w-md md:max-w-lg mx-auto font-light leading-relaxed px-4 sm:px-0"
         >
-          Access premium gaming stations from anywhere. Play the latest titles
-          without investing in expensive equipment.
+          Your premium destination for high-end gaming stations.
         </motion.p>
         
         <motion.div 
@@ -111,21 +110,21 @@ export default function HeroSection() {
           >
             <Link
               to="/signup"
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 w-full sm:w-auto text-center
+              className="bg-purple-600 hover:bg-purple-700 text-white dark:text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 w-full sm:w-auto text-center
                 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 block"
             >
-              Get Started
+              Book Your Slot Now
             </Link>
           </motion.div>
           <motion.a 
             href="#features"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group bg-white/10 hover:bg-white/20 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 
-              flex items-center justify-center gap-2 w-full sm:w-auto backdrop-blur-sm border border-white/10 hover:border-white/20
-              shadow-lg shadow-white/5 hover:shadow-white/10"
+            className="group bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 text-gray-800 dark:text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200 
+              flex items-center justify-center gap-2 w-full sm:w-auto backdrop-blur-sm border border-gray-300 dark:border-white/10 hover:border-gray-400 dark:hover:border-white/20
+              shadow-lg shadow-gray-300/25 dark:shadow-white/5 hover:shadow-gray-400/40 dark:hover:shadow-white/10"
           >
-            <Play className="h-4 w-4 text-purple-400 group-hover:text-purple-300" fill="currentColor" />
+            <Play className="h-4 w-4 text-purple-600 dark:text-purple-400 group-hover:text-purple-700 dark:group-hover:text-purple-300" fill="currentColor" />
             Learn More
           </motion.a>
         </motion.div>
@@ -155,11 +154,11 @@ export default function HeroSection() {
           >
             <Link
               to="/stations"
-              className="group bg-purple-600 hover:bg-purple-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200
+              className="group bg-purple-600 hover:bg-purple-700 text-white dark:text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-medium transition-all duration-200
                 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 border border-purple-500/50 flex items-center gap-2"
             >
               <span>View All Stations</span>
-              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200 text-white dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
@@ -172,8 +171,8 @@ export default function HeroSection() {
           transition={{ duration: 0.6, delay: 1.2 }}
           className="mt-8 sm:mt-12 flex justify-center"
         >
-          <div className="group bg-black/70 backdrop-blur-sm px-4 sm:px-6 py-2.5 sm:py-3 rounded-full flex flex-col sm:flex-row items-center gap-2 sm:gap-3 border border-white/5 hover:border-white/10 transition-all duration-300 shadow-[0_0_15px_rgba(147,51,234,0.1)] group-hover:shadow-[0_0_25px_rgba(147,51,234,0.2)] relative hover:translate-y-[-5px]">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-purple-900/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="group bg-gray-200 dark:bg-black/70 backdrop-blur-sm px-4 sm:px-6 py-2.5 sm:py-3 rounded-full flex flex-col sm:flex-row items-center gap-2 sm:gap-3 border border-gray-300 dark:border-white/5 hover:border-gray-400 dark:hover:border-white/10 transition-all duration-300 shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(147,51,234,0.1)] group-hover:shadow-[0_0_25px_rgba(0,0,0,0.2)] dark:group-hover:shadow-[0_0_25px_rgba(147,51,234,0.2)] relative hover:translate-y-[-5px]">
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-300/20 to-gray-600/20 dark:from-purple-500/20 dark:to-purple-900/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="relative flex -space-x-1.5 sm:-space-x-2">
               {[
                 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100',
@@ -197,8 +196,8 @@ export default function HeroSection() {
               ))}
             </div>
             <div className="relative flex flex-col items-center sm:items-start">
-              <span className="text-xs sm:text-sm text-purple-400 font-medium group-hover:text-purple-300 transition-colors text-center sm:text-left">1,200+ gamers</span>
-              <span className="text-[10px] sm:text-xs text-gray-400 group-hover:text-gray-300 transition-colors text-center sm:text-left">currently online</span>
+              <span className="text-purple-700 dark:text-purple-400 font-medium group-hover:text-purple-800 dark:group-hover:text-purple-300 transition-colors text-center sm:text-left">1,200+ gamers</span>
+              <span className="text-gray-700 dark:text-gray-400 text-[10px] sm:text-xs group-hover:text-gray-800 dark:group-hover:text-gray-300 transition-colors text-center sm:text-left">currently online</span>
             </div>
           </div>
         </motion.div>

@@ -2,7 +2,6 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { ThemeProvider } from './components/ThemeProvider';
-import { ThemeToggle } from './components/ui/ThemeToggle';
 import ChatSupport from './components/ChatSupport';
 
 // Lazy load page components
@@ -22,7 +21,6 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <Router>
-          <ThemeToggle />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<HomePage />} />

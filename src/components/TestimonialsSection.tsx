@@ -85,28 +85,28 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ text, name, company, 
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3 }}
-      className="testimonial-card relative overflow-hidden rounded-2xl bg-black/60 backdrop-blur-sm border border-white/5 hover:border-purple-500/30 transition-all duration-300 group"
+      className="testimonial-card relative overflow-hidden rounded-2xl bg-white/80 dark:bg-black/60 backdrop-blur-sm border border-gray-200 dark:border-white/5 hover:border-purple-600 dark:hover:border-purple-500/30 transition-all duration-300 group hover:shadow-lg hover:shadow-gray-300/30 dark:hover:shadow-purple-500/5"
       style={tiltStyle}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
     >
-      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-20 transition-opacity duration-300 group-hover:opacity-30`} />
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-30 transition-opacity duration-300 group-hover:opacity-40`} />
       <div 
         className="absolute inset-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300" 
         style={meshGradientStyle}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-transparent dark:from-black/80 dark:via-black/40 dark:to-transparent opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
       <div className="relative p-6 sm:p-8 space-y-4 sm:space-y-6">
-        <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{text}</p>
+        <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{text}</p>
         <div className="flex items-center gap-3 sm:gap-4">
           <img
             src={imageUrl}
             alt={name}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white/10"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-gray-300 dark:border-white/10"
           />
           <div>
-            <h4 className="font-medium text-sm sm:text-base text-white">{name}</h4>
-            <p className="text-gray-400 text-xs sm:text-sm">{company}</p>
+            <h4 className="font-medium text-sm sm:text-base text-gray-900 dark:text-white">{name}</h4>
+            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">{company}</p>
           </div>
         </div>
       </div>
@@ -119,8 +119,8 @@ export const TestimonialsSection = () => {
     <section className="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-purple-400 font-medium mb-2 sm:mb-4 text-sm sm:text-base">Testimonials</h2>
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 font-press-start-2p leading-tight">
+          <h2 className="text-purple-700 dark:text-purple-400 font-medium mb-2 sm:mb-4 text-sm sm:text-base">Testimonials</h2>
+          <h3 className="text-gray-900 dark:text-white text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 font-press-start-2p leading-tight">
             What Gamers Are Saying
           </h3>
         </div>
