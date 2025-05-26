@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 dark:from-black dark:to-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 dark:from-black dark:to-gray-900 transition-colors duration-300 overflow-x-hidden">
       <Navbar />
       <AnimatePresence>
         <motion.main
@@ -22,6 +22,7 @@ export default function HomePage() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
+          className="w-full max-w-[100vw]"
         >
           <HeroSection />
           
