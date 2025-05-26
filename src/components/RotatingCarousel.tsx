@@ -147,8 +147,8 @@ export default function RotatingCarousel({
     stopAutoRotate();
     const angleToFocus = -i * displayTheta;
     animate(rotation.get(), angleToFocus, {
-      duration: 0.5,
-      ease: [0.4, 0, 0.2, 1],
+      duration: 0.8,
+      ease: [0.32, 0.72, 0, 1],
       onUpdate: v => rotation.set(v),
       onComplete: () => {
         setFocusedIndex(i);
@@ -159,7 +159,15 @@ export default function RotatingCarousel({
   };
 
   // Subtle blur effect when focused
-  const blurStyle = focusedIndex !== null ? { filter: 'blur(2px) brightness(0.99)' } : {};
+  const blurStyle = focusedIndex !== null 
+    ? { 
+        filter: 'blur(2px) brightness(0.99)',
+        transition: 'filter 0.5s cubic-bezier(0.32, 0.72, 0, 1)'
+      } 
+    : { 
+        filter: 'blur(0px) brightness(1)',
+        transition: 'filter 0.5s cubic-bezier(0.32, 0.72, 0, 1)'
+      };
 
   return (
     <div
@@ -184,8 +192,12 @@ export default function RotatingCarousel({
           const scale = useTransform(z, zVal => {
             if (focusedIndex === i) return 1.12;
             return 0.7 + 0.3 * ((zVal + RADIUS) / (2 * RADIUS));
+          }, {
+            transition: { type: 'spring', stiffness: 100, damping: 20 }
           });
-          const opacity = useTransform(z, zVal => 0.4 + 0.6 * ((zVal + RADIUS) / (2 * RADIUS)));
+          const opacity = useTransform(z, (zVal: number) => 0.4 + 0.6 * ((zVal + RADIUS) / (2 * RADIUS)), {
+            transition: { type: 'spring', stiffness: 100, damping: 20 }
+          });
           // Floating animation
           const floatY = useMotionValue(0);
           React.useEffect(() => {
@@ -228,8 +240,13 @@ export default function RotatingCarousel({
                 zIndex: 100 + Math.round(z.get()),
                 border: focusedIndex === i ? 'none' : undefined,
               }}
-              transition={{ type: 'spring', stiffness: 160, damping: 28 }}
-              className={`rounded-2xl overflow-hidden bg-black/60 backdrop-blur-md transition-all duration-300 group`}
+              transition={{ 
+                type: 'spring', 
+                stiffness: 100, 
+                damping: 20,
+                mass: 0.8
+              }}
+              className={`rounded-2xl overflow-hidden bg-black/60 backdrop-blur-md transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group`}
               onClick={() => handleCardClick(i)}
             >
               {/* Gradient blur glow for focused card */}
@@ -245,8 +262,8 @@ export default function RotatingCarousel({
                     src={item.src}
                     alt={item.title}
                     className={focusedIndex === i
-                      ? 'w-full h-full object-cover transition-all duration-300'
-                      : 'w-full h-full object-cover transition-all duration-300'}
+                      ? 'w-full h-full object-cover transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]'
+                      : 'w-full h-full object-cover transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]'}
                   />
                 </div>
                 <div className="p-4 flex flex-col flex-grow h-full min-h-0 overflow-hidden">
