@@ -47,7 +47,7 @@ const highEndGamingCards: CarouselItem[] = [
     category: 'Access',
   },
   {
-    src: 'https://images.unsplash.com/photo-1542751371-738aa5606974?auto=format&fit=crop&w=800&q=80',
+    src: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=800&q=80',
     title: 'Seamless Gameplay',
     category: 'Smoothness',
   },
@@ -113,7 +113,7 @@ export default function RotatingCarousel({
     return () => stopAutoRotate();
   }, [isFocusing, autoRotate, startAutoRotate, stopAutoRotate]);
 
-  // Mouse drag to rotate
+  // Mouse drag to rotate with improved mobile response
   const handlePointerDown = (e: React.PointerEvent) => {
     setIsDragging(true);
     setDragStart(e.clientX);
@@ -125,12 +125,14 @@ export default function RotatingCarousel({
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isDragging) return;
     const delta = e.clientX - dragStart;
-    rotation.set(dragStartAngle + delta * 0.5);
+    const sensitivity = window.innerWidth <= 768 ? 1.5 : 0.5; // Increased sensitivity for mobile
+    rotation.set(dragStartAngle + delta * sensitivity);
   };
 
   const handlePointerUp = (e: React.PointerEvent) => {
     setIsDragging(false);
     if (!focusedIndex && autoRotate) startAutoRotate();
+    (e.target as HTMLElement).releasePointerCapture(e.pointerId);
   };
 
   // Click to focus: animate carousel so card comes to center
